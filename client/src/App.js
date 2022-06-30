@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import HomePage from 'pages/HomePage';
 import ProductPage from 'pages/ProductPage';
 import CartPage from 'pages/CartPage';
+import SignInPage from 'pages/SignInPage';
 import { Store } from 'utils/Store';
 
 import Navbar from 'react-bootstrap/Navbar';
@@ -43,6 +44,7 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/product/:slug" element={<ProductPage />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/signin" element={<SignInPage />} />
             </Routes>
           </Container>
         </main>

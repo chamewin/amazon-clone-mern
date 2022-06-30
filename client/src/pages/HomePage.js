@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useReducer, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import Product from '../component/Product';
@@ -32,6 +33,7 @@ const reducer = (state, action) => {
 };
 
 const HomePage = () => {
+  const navigate = useNavigate();
   const [{ products, error, loading }, dispatch] = useReducer(
     reducer,
     initialState
@@ -59,6 +61,7 @@ const HomePage = () => {
     // const { data } = await axios.get(`/api/products/${product._id}`);
     
     ctxDispatch({ type:'CART_ADD_ITEM', payload: {...product, quantity: quantity }});
+    navigate('/cart');
   };
 
   return (
