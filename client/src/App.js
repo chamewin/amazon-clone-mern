@@ -7,6 +7,7 @@ import HomePage from 'pages/HomePage';
 import ProductPage from 'pages/ProductPage';
 import CartPage from 'pages/CartPage';
 import SignInPage from 'pages/SignInPage';
+import ShippingAddressPage from 'pages/ShippingAddressPage';
 import { Store } from 'utils/Store';
 
 import Navbar from 'react-bootstrap/Navbar';
@@ -23,6 +24,7 @@ function App() {
   const signoutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
+    localStorage.removeItem('shippingAddress');
   };
 
   return (
@@ -77,6 +79,7 @@ function App() {
               <Route path="/product/:slug" element={<ProductPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/signin" element={<SignInPage />} />
+              <Route path="/shipping" element={<ShippingAddressPage />} />
             </Routes>
           </Container>
         </main>
