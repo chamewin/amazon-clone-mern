@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
 import { Store } from '../utils/Store';
-import { Message } from '../component/Message';
+import { Message } from '../components/Message';
 
 import Container from 'react-bootstrap/Container';
 import Card from 'react-bootstrap/Card';

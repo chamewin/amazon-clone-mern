@@ -3,9 +3,9 @@ import { useEffect, useReducer, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-import Product from '../component/Product';
-import { Loading } from '../component/Loading';
-import { Message } from '../component/Message';
+import Product from '../components/Product';
+import { Loading } from '../components/Loading';
+import { Message } from '../components/Message';
 import { Store } from '../utils/Store';
 
 import Row from 'react-bootstrap/Row';

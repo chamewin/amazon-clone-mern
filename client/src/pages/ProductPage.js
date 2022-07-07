@@ -3,15 +3,15 @@ import { useContext, useEffect, useReducer } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
-import { Loading } from '../component/Loading';
-import { Message } from '../component/Message';
+import { Loading } from '../components/Loading';
+import { Message } from '../components/Message';
 import { Store } from '../utils/Store';
 import { getError } from '../utils/utils';
 
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import ListGroup from 'react-bootstrap/ListGroup';
-import Rating from '../component/Rating';
+import Rating from '../components/Rating';
 import Badge from 'react-bootstrap/Badge';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';

@@ -4,7 +4,7 @@ import { Button, Form } from 'react-bootstrap';
 import { Helmet } from 'react-helmet-async';
 import { Store } from 'utils/Store';
 import { useEffect } from 'react';
-import CheckoutSteps from 'component/CheckoutSteps';
+import CheckoutSteps from 'components/CheckoutSteps';
 
 const ShippingAddressScreen = () => {
   const navigate = useNavigate();

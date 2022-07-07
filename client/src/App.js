@@ -7,7 +7,9 @@ import HomePage from 'pages/HomePage';
 import ProductPage from 'pages/ProductPage';
 import CartPage from 'pages/CartPage';
 import SignInPage from 'pages/SignInPage';
+import SignUpPage from 'pages/SignUpPage';
 import ShippingAddressPage from 'pages/ShippingAddressPage';
+import PaymentMethodPage from 'pages/PaymentMethodPage';
 import { Store } from 'utils/Store';
 
 import Navbar from 'react-bootstrap/Navbar';
@@ -25,6 +27,7 @@ function App() {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
+    localStorage.removeItem('paymentMethod');
   };
 
   return (
@@ -79,7 +82,9 @@ function App() {
               <Route path="/product/:slug" element={<ProductPage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/signin" element={<SignInPage />} />
+              <Route path="/signup" element={<SignUpPage />} />
               <Route path="/shipping" element={<ShippingAddressPage />} />
+              <Route path="/payment" element={<PaymentMethodPage />} />
             </Routes>
           </Container>
         </main>
