@@ -8,9 +8,12 @@ import ProductPage from 'pages/ProductPage';
 import CartPage from 'pages/CartPage';
 import SignInPage from 'pages/SignInPage';
 import SignUpPage from 'pages/SignUpPage';
+import ProfilePage from 'pages/ProfilePage';
 import ShippingAddressPage from 'pages/ShippingAddressPage';
 import PaymentMethodPage from 'pages/PaymentMethodPage';
 import PlaceOrderPage from 'pages/PlaceOrderPage';
+import OrderPage from 'pages/OrderPage';
+import OrderHistoryPage from 'pages/OrderHistoryPage';
 import { Store } from 'utils/Store';
 
 import Navbar from 'react-bootstrap/Navbar';
@@ -30,6 +33,7 @@ function App() {
     localStorage.removeItem('userInfo');
     localStorage.removeItem('shippingAddress');
     localStorage.removeItem('paymentMethod');
+    window.location.href = '/signin';
   };
 
   return (
@@ -85,9 +89,12 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/signup" element={<SignUpPage />} />
+              <Route path="/profile" element={<ProfilePage />} />
               <Route path="/shipping" element={<ShippingAddressPage />} />
               <Route path="/payment" element={<PaymentMethodPage />} />
               <Route path="/placeorder" element={<PlaceOrderPage />} />
+              <Route path="/order/:id" element={<OrderPage />} />
+              <Route path="orderhistory" element={<OrderHistoryPage />} />
             </Routes>
           </Container>
         </main>
