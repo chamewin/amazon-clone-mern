@@ -1,0 +1,21 @@
+{
+  "name": "amazon-clone-mern",
+  "version": "1.0.0",
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "scripts": {
+    "build": "cd server && npm install && cd ../client && npm install && npm run build",
+    "start": "node server/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chamewin/amazon-clone-mern.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chamewin/amazon-clone-mern/issues"
+  },
+  "homepage": "https://github.com/chamewin/amazon-clone-mern#readme"
+}
