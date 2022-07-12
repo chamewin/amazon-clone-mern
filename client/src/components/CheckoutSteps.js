@@ -1,8 +1,6 @@
-import { Row, Col, Button } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Row, Col } from 'react-bootstrap';
 
 const CheckoutSteps = (props) => {
-  const navigate = useNavigate();
   return (
     <Row className="checkout-steps">
       <Col className={props.step1 ? 'active' : ''}>Sign-In</Col>

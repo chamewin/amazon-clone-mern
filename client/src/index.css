@@ -39,7 +39,7 @@ main {
   color: #dfaa19b0;
 }
 
-.btn-primary {
+.btn-primary, .btn-outline-primary {
   background-color: #dfaa19b0;
   color: black;
   border: none;
@@ -52,22 +52,6 @@ main {
 
 .img-large {
   max-width: 100%;
-}
-
-.dt {
-  color: black;
-  font-size: .8rem;
-}
-
-.dt button {
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-  font-size: .8rem;
-}
-
-.dm {
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  min-width: 5rem;
-  font-size: .8rem;
 }
 
 .img-thumbnail {
