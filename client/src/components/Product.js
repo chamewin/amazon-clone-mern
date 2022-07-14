@@ -46,7 +46,12 @@ const Product = (props) => {
             Out of Stock
           </Button>
         ) : (
-          <Button onClick={() => addToCartHandler(product)}>Add to Cart</Button>
+          <Button
+            className="btn btn-outline-primary"
+            onClick={() => addToCartHandler(product)}
+          >
+            Add to Cart
+          </Button>
         )}
       </Card.Body>
     </Card>

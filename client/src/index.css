@@ -1,63 +1,49 @@
 body {
-	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
-
 .site-container {
-	min-height: 100vh;
+  min-height: 100vh;
 }
-
 main {
-	flex: 1;
+  flex: 1;
 }
-
+.btn-primary,
+.btn-outline-primary {
+  background-color: #c5a140;
+  color: #000000;
+}
 .products {
-	display: flex;
-	flex-wrap: wrap;
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
 }
 
-.product {
-	border: 1px #404040 solid;
-	margin: 1rem;
-}
-
-.product img {
-	width: 100%;
-	max-width: 400px;
-}
-
-.product-info {
-	padding: 1rem;
-}
-
 .rating span {
-  color: #dfaa19b0;
+  color: #c5a140;
 }
 
-.btn-primary, .btn-outline-primary {
-  background-color: #dfaa19b0;
-  color: black;
-  border: none;
+.product {
+  border: 1px #404040 solid;
+  margin: 1rem;
 }
-
-.rating .numReviews {
-  margin-left: 0.25rem;
-  color: #007185;
+.product img {
+  width: 100%;
+  max-width: 400px;
 }
-
+.product-info {
+  padding: 1rem;
+}
 .img-large {
   max-width: 100%;
 }
-
 .img-thumbnail {
   height: 80px;
 }
-
 .small-container {
   max-width: 600px;
 }

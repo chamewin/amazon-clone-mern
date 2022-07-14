@@ -5,8 +5,10 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import HomePage from 'pages/HomePage';
+import DashboardPage from 'pages/DashboardPage';
 import ProductPage from 'pages/ProductPage';
 import CartPage from 'pages/CartPage';
+import SearchPage from 'pages/SearchPage';
 import SignInPage from 'pages/SignInPage';
 import SignUpPage from 'pages/SignUpPage';
 import ProfilePage from 'pages/ProfilePage';
@@ -16,6 +18,8 @@ import PlaceOrderPage from 'pages/PlaceOrderPage';
 import OrderPage from 'pages/OrderPage';
 import OrderHistoryPage from 'pages/OrderHistoryPage';
 import SearchBox from 'components/SearchBox';
+import { AdminRoute } from 'components/AdminRoute';
+import { ProtectedRoute } from 'components/ProtectedRoute';
 import { Store } from 'utils/Store';
 import { getError } from 'utils/utils';
 
@@ -34,14 +38,13 @@ function App() {
 
   useEffect(() => {
     const fetchCategories = async () => {
-      try { 
+      try {
         const { data } = await axios.get(`/api/products/categories`);
         setCategories(data);
-      }
-      catch (err) {
+      } catch (err) {
         toast.error(getError(err));
       }
-    }
+    };
     fetchCategories();
   }, []);
   const signoutHandler = () => {
@@ -109,6 +112,22 @@ function App() {
                     Sign In
                   </Link>
                 )}
+                {userInfo && userInfo.isAdmin && (
+                  <NavDropdown title="Admin" id="admin-nav-dropdown">
+                    <LinkContainer to="/admin/dashboard">
+                      <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/productlist">
+                      <NavDropdown.Item>Products</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/orderlist">
+                      <NavDropdown.Item>Orders</NavDropdown.Item>
+                    </LinkContainer>
+                    <LinkContainer to="/admin/userlist">
+                      <NavDropdown.Item>Users</NavDropdown.Item>
+                    </LinkContainer>
+                  </NavDropdown>
+                )}
               </Nav>
             </Container>
           </Navbar>
@@ -139,17 +158,47 @@ function App() {
         <main>
           <Container className="mt-3">
             <Routes>
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <AdminRoute>
+                    <DashboardPage />
+                  </AdminRoute>
+                }
+              />
               <Route path="/" element={<HomePage />} />
               <Route path="/product/:slug" element={<ProductPage />} />
               <Route path="/cart" element={<CartPage />} />
+              <Route path="/search" element={<SearchPage />} />
               <Route path="/signin" element={<SignInPage />} />
               <Route path="/signup" element={<SignUpPage />} />
-              <Route path="/profile" element={<ProfilePage />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/shipping" element={<ShippingAddressPage />} />
               <Route path="/payment" element={<PaymentMethodPage />} />
               <Route path="/placeorder" element={<PlaceOrderPage />} />
-              <Route path="/order/:id" element={<OrderPage />} />
-              <Route path="orderhistory" element={<OrderHistoryPage />} />
+              <Route
+                path="/order/:id"
+                element={
+                  <ProtectedRoute>
+                    <OrderPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="orderhistory"
+                element={
+                  <ProtectedRoute>
+                    <OrderHistoryPage />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </Container>
         </main>
