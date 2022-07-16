@@ -19,6 +19,6 @@
   },
   "homepage": "https://github.com/chamewin/amazon-clone-mern#readme",
   "dependencies": {
-    "react-google-charts": "^4.0.0"
+    
   }
 }
