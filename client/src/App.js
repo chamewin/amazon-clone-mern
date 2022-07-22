@@ -6,6 +6,9 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import HomePage from 'pages/HomePage';
 import DashboardPage from 'pages/DashboardPage';
+import ProductListPage from 'pages/ProductListPage';
+import ProductEditPage from 'pages/ProductEditPage';
+import OrderListPage from 'pages/OrderListPage';
 import ProductPage from 'pages/ProductPage';
 import CartPage from 'pages/CartPage';
 import SearchPage from 'pages/SearchPage';
@@ -117,13 +120,13 @@ function App() {
                     <LinkContainer to="/admin/dashboard">
                       <NavDropdown.Item>Dashboard</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to="/admin/productlist">
+                    <LinkContainer to="/admin/products">
                       <NavDropdown.Item>Products</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to="/admin/orderlist">
+                    <LinkContainer to="/admin/orders">
                       <NavDropdown.Item>Orders</NavDropdown.Item>
                     </LinkContainer>
-                    <LinkContainer to="/admin/userlist">
+                    <LinkContainer to="/admin/users">
                       <NavDropdown.Item>Users</NavDropdown.Item>
                     </LinkContainer>
                   </NavDropdown>
@@ -163,6 +166,30 @@ function App() {
                 element={
                   <AdminRoute>
                     <DashboardPage />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/products"
+                element={
+                  <AdminRoute>
+                    <ProductListPage />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/product/:id"
+                element={
+                  <AdminRoute>
+                    <ProductEditPage />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/orders"
+                element={
+                  <AdminRoute>
+                    <OrderListPage />
                   </AdminRoute>
                 }
               />

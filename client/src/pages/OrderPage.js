@@ -7,7 +7,7 @@ import { Loading } from 'components/Loading';
 import { Message } from 'components/Message';
 import { Store } from 'utils/Store';
 import { getError } from 'utils/utils';
-import { Card, Row, Col, ListGroup } from 'react-bootstrap';
+import { Card, Row, Col, ListGroup, Button } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
 const reducer = (state, action) => {
@@ -26,6 +26,14 @@ const reducer = (state, action) => {
       return { ...state, loadingPay: false };
     case 'PAY_RESET':
       return { ...state, loadingPay: false, successPay: false };
+    case 'DELIVER_REQUEST':
+      return { ...state, loadingDeliver: true, successDeliver: false };
+    case 'DELIVER_SUCCESS':
+      return { ...state, loadingDeliver: false, successDeliver: true };
+    case 'DELIVER_FAIL':
+      return { ...state, loadingDeliver: false };
+    case 'DELIVER_RESET':
+      return { ...state, loadingDeliver: false, successDeliver: false };
     default:
       return state;
   }
@@ -36,7 +44,18 @@ const OrderPage = () => {
   const navigate = useNavigate();
   const { state } = useContext(Store);
   const { userInfo } = state;
-  const [{ loading, error, order, successPay, loadingPay }, dispatch] = useReducer(reducer, {
+  const [
+    {
+      loading,
+      error,
+      order,
+      successPay,
+      loadingPay,
+      loadingDeliver,
+      successDeliver,
+    },
+    dispatch,
+  ] = useReducer(reducer, {
     loading: true,
     order: {},
     error: '',
@@ -99,10 +118,18 @@ const OrderPage = () => {
     if (!userInfo) {
       return navigate('/login');
     }
-    if (!order._id || successPay || (order._id && order._id !== orderId)) {
+    if (
+      !order._id ||
+      successPay ||
+      successDeliver ||
+      (order._id && order._id !== orderId)
+    ) {
       fetchOrder();
       if (successPay) {
         dispatch({ type: 'PAY_RESET' });
+      }
+      if (successDeliver) {
+        dispatch({ type: 'DELIVER_RESET' });
       }
     } else {
       const loadPayPalScript = async () => {
@@ -120,15 +147,54 @@ const OrderPage = () => {
       };
       loadPayPalScript();
     }
-  }, [order, userInfo, orderId, navigate, paypalDispatch, successPay]);
+  }, [
+    order,
+    userInfo,
+    orderId,
+    navigate,
+    paypalDispatch,
+    successPay,
+    successDeliver,
+  ]);
 
   const convertDate = (date) => {
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    const month = months[Number(date.substring(5,7))-1];
-    const day = date.substring(8,10);
-    const year = date.substring(0,4);
+    const months = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'Jun',
+      'Jul',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec',
+    ];
+    const month = months[Number(date.substring(5, 7)) - 1];
+    const day = date.substring(8, 10);
+    const year = date.substring(0, 4);
     return `${month} ${day}, ${year}`;
-  }
+  };
+
+  const deliverOrderHandler = async () => {
+    try {
+      dispatch({ type: 'DELIVER_REQUEST' });
+      const { data } = await axios.put(
+        `/api/orders/${order._id}/deliver`,
+        {},
+        {
+          headers: { authorization: `Bearer ${userInfo.token}` },
+        }
+      );
+      dispatch({ type: 'DELIVER_SUCCESS' });
+      toast.success('Order is delivered');
+    } catch (err) {
+      toast.error(getError(err));
+      dispatch({ type: 'DELIVER_FAIL' });
+    }
+  };
 
   return loading ? (
     <Loading></Loading>
@@ -165,7 +231,9 @@ const OrderPage = () => {
               <Card.Title>Payment</Card.Title>
               <Card.Text>
                 {order.isPaid ? (
-                  <Message variant="success">Paid on {convertDate(order.paidAt)}</Message>
+                  <Message variant="success">
+                    Paid on {convertDate(order.paidAt)}
+                  </Message>
                 ) : (
                   <Message variant="danger">Not Paid</Message>
                 )}
@@ -241,6 +309,16 @@ const OrderPage = () => {
                       </div>
                     )}
                     {loadingPay && <Loading></Loading>}
+                  </ListGroup.Item>
+                )}
+                {userInfo.isAdmin && order.isPaid && !order.isDelivered && (
+                  <ListGroup.Item>
+                    {loadingDeliver && <Loading></Loading>}
+                    <div className="d-grid">
+                      <Button type="button" onClick={deliverOrderHandler}>
+                        Deliver Order
+                      </Button>
+                    </div>
                   </ListGroup.Item>
                 )}
               </ListGroup>

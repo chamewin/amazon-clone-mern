@@ -38,6 +38,7 @@ const ProfileScreen = () => {
       toast.error('Passwords do not match')
       return;
     }
+    
     try {
       const { data } = await axios.put(
         '/api/users/profile',
