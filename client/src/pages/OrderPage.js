@@ -181,7 +181,7 @@ const OrderPage = () => {
   const deliverOrderHandler = async () => {
     try {
       dispatch({ type: 'DELIVER_REQUEST' });
-      const { data } = await axios.put(
+      await axios.put(
         `/api/orders/${order._id}/deliver`,
         {},
         {

@@ -3,12 +3,13 @@ import axios from 'axios';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import { Store } from 'utils/Store';
 import Rating from './Rating';
 
 const Product = (props) => {
+  const navigate = useNavigate();
   const { product } = props;
   
   const { state, dispatch: ctxDispatch } = useContext(Store);
@@ -28,6 +29,7 @@ const Product = (props) => {
       type: 'CART_ADD_ITEM',
       payload: { ...item, quantity },
     });
+    navigate('/cart');
   };
 
   return (

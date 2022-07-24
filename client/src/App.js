@@ -9,6 +9,7 @@ import DashboardPage from 'pages/DashboardPage';
 import ProductListPage from 'pages/ProductListPage';
 import ProductEditPage from 'pages/ProductEditPage';
 import OrderListPage from 'pages/OrderListPage';
+import UserListPage from 'pages/UserListPage';
 import ProductPage from 'pages/ProductPage';
 import CartPage from 'pages/CartPage';
 import SearchPage from 'pages/SearchPage';
@@ -190,6 +191,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <OrderListPage />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/users"
+                element={
+                  <AdminRoute>
+                    <UserListPage />
                   </AdminRoute>
                 }
               />

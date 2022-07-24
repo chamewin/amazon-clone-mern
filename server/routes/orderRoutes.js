@@ -6,14 +6,25 @@ import Product from '../models/productModel.js';
 import { isAuth, isAdmin } from '../utils.js';
 
 const orderRouter = express.Router();
-
+const PAGE_SIZE = 5;
 orderRouter.get(
   '/',
   isAuth,
   isAdmin,
   expressAsyncHandler(async (req, res) => {
-    const orders = await Order.find().populate('user', 'name');
-    res.send(orders);
+    const { query } = req;
+    const page = query.page || 1;
+    const pageSize = query.pageSize || PAGE_SIZE;
+    const orders = await Order.find().populate('user', 'name')
+      .skip(pageSize * (page - 1))
+      .limit(pageSize);
+    const countOrders = await Order.countDocuments();
+    res.send({
+      orders,
+      // page,
+      // countOrders,
+      pages: Math.ceil(countOrders / pageSize),
+    });
   })
 );
 
@@ -36,6 +47,29 @@ orderRouter.post(
     res.status(201).send({ message: 'New Order Created', order });
   })
 );
+
+
+
+// orderRouter.get(
+//   '/admin',
+//   isAuth,
+//   isAdmin,
+//   expressAsyncHandler(async (req, res) => {
+//     const { query } = req;
+//     const page = query.page || 1;
+//     const pageSize = query.pageSize || PAGE_SIZE;
+//     const orders = await Order.find()
+//       .skip(pageSize * (page - 1))
+//       .limit(pageSize);
+//     const countOrders = await Order.countDocuments();
+//     res.send({
+//       orders,
+//       countOrders,
+//       page,
+//       pages: Math.ceil(countOrders / pageSize),
+//     })
+//   })
+// );
 
 orderRouter.get(
   '/summary',
@@ -136,6 +170,21 @@ orderRouter.put(
 
       const updatedOrder = await order.save();
       res.send({ message: 'Order Paid', order: updatedOrder });
+    }
+  })
+);
+
+orderRouter.delete(
+  '/:id',
+  isAuth,
+  isAdmin,
+  expressAsyncHandler(async (req, res) => {
+    const order = await Order.findById(req.params.id);
+    if (order) {
+      await order.remove();
+      res.send({ message: 'Order Removed' });
+    } else {
+      res.status(404).send({ message: 'Order Not Found' });
     }
   })
 );
