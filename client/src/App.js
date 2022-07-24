@@ -10,6 +10,7 @@ import ProductListPage from 'pages/ProductListPage';
 import ProductEditPage from 'pages/ProductEditPage';
 import OrderListPage from 'pages/OrderListPage';
 import UserListPage from 'pages/UserListPage';
+import UserEditPage from 'pages/UserEditPage';
 import ProductPage from 'pages/ProductPage';
 import CartPage from 'pages/CartPage';
 import SearchPage from 'pages/SearchPage';
@@ -51,6 +52,7 @@ function App() {
     };
     fetchCategories();
   }, []);
+  
   const signoutHandler = () => {
     ctxDispatch({ type: 'USER_SIGNOUT' });
     localStorage.removeItem('userInfo');
@@ -199,6 +201,14 @@ function App() {
                 element={
                   <AdminRoute>
                     <UserListPage />
+                  </AdminRoute>
+                }
+              />
+              <Route
+                path="/admin/user/:id"
+                element={
+                  <AdminRoute>
+                    <UserEditPage />
                   </AdminRoute>
                 }
               />
