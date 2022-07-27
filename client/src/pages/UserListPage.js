@@ -17,6 +17,14 @@ const reducer = (state, action) => {
       return { ...state, loading: false, users: action.payload };
     case 'FETCH_FAIL':
       return { ...state, loading: false, error: action.payload };
+    case 'DELETE_REQUEST':
+      return { ...state, loadingDelete: true, successDelete: false };
+    case 'DELETE_SUCCESS':
+      return { ...state, loadingDelete: false, successDelete: true };
+    case 'DELETE_FAIL':
+      return { ...state, loadingDelete: false };
+    case 'DELETE_RESET':
+      return { ...state, loadingDelete: false, successDelete: false };
     default:
       return state;
   }
@@ -27,10 +35,12 @@ const UserListPage = () => {
   const { state } = useContext(Store);
   const { userInfo } = state;
 
-  const [{ loading, error, users }, dispatch] = useReducer(reducer, {
-    loading: false,
-    error: '',
-  });
+  const [{ loading, error, users, loadingDelete, successDelete }, dispatch] =
+    useReducer(reducer, {
+      loading: false,
+      error: '',
+      users: [],
+    });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,15 +54,19 @@ const UserListPage = () => {
         dispatch({ type: 'FETCH_FAIL', payload: getError(err) });
       }
     };
-    fetchData();
-  }, [userInfo]);
+    if (successDelete) {
+      dispatch({ type: 'DELETE_RESET' });
+    } else {
+      fetchData();
+    }
+  }, [userInfo, successDelete]);
 
-  const deleteUserHandler = async (user) => {
+  const deleteHandler = async (user) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
         dispatch({ type: 'DELETE_REQUEST' });
-        await axios.delete(`/api/users`, {
-          headers: `Authorization: Bearer ${userInfo.token} `,
+        await axios.delete(`/api/users/${user._id}`, { 
+          headers: { Authorization: `Bearer ${userInfo.token}` },
         });
         toast.success('User deleted successfully');
         dispatch({ type: 'DELETE_SUCCESS' });
@@ -69,6 +83,7 @@ const UserListPage = () => {
         <title>Users</title>
       </Helmet>
       <h1>Users</h1>
+      {loadingDelete && <Loading></Loading>}
       {loading ? (
         <Loading></Loading>
       ) : error ? (
@@ -85,7 +100,6 @@ const UserListPage = () => {
             </tr>
           </thead>
           <tbody>
-            {/* {console.log(typeof(users))} */}
             {users.map((user) => (
               <tr key={user._id}>
                 <td>{user._id}</td>
@@ -100,13 +114,14 @@ const UserListPage = () => {
                   >
                     Edit
                   </Button>
+                  &nbsp;
                   <Button
-                      type="button"
-                      variant="light"
-                      onClick={() => deleteUserHandler(user)}
-                    >
-                      Delete
-                    </Button>
+                    type="button"
+                    variant="light"
+                    onClick={() => deleteHandler(user)}
+                  >
+                    Delete
+                  </Button>
                 </td>
               </tr>
             ))}

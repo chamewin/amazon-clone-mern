@@ -11,8 +11,6 @@ import { Store } from '../utils/Store';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-
-
 const initialState = {
   products: [],
   error: '',
@@ -58,8 +56,6 @@ const HomePage = () => {
   const addToCartHandler = async (product) => {
     const existItem = cart.cartItems.find((x) => x._id === product._id);
     const quantity = existItem ? existItem.quantity + 1 : 1;
-    // const { data } = await axios.get(`/api/products/${product._id}`);
-    
     ctxDispatch({ type:'CART_ADD_ITEM', payload: {...product, quantity: quantity }});
     navigate('/cart');
   };
