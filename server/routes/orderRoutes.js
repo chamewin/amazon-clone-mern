@@ -169,6 +169,9 @@ orderRouter.put(
       };
 
       const updatedOrder = await order.save();
+      mailgun().message().send({
+        from:'Amazona <amazona'
+      })
       res.send({ message: 'Order Paid', order: updatedOrder });
     }
   })
